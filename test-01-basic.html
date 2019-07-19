@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>p5.js example</title>
+    <style> body {padding: 0; margin: 0;} </style>
+
+    <script src="addScreenPositionFunction.js"></script>
+    <script src="lib/p5.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      
+      p5.disableFriendlyErrors = true;
+
+
+      // set mode to "2D" or "3D" to quickly test if WEBGL is also working
+      var mode = "2D";
+
+      function setup() {
+        if (mode == "2D") createCanvas(windowWidth, windowHeight);
+        else createCanvas(windowWidth, windowHeight, WEBGL);
+
+        addScreenPositionFunction();
+
+        angleMode(DEGREES);
+        rectMode(CENTER);
+        stroke(255);
+      }
+
+      function draw() {
+        // resetTransformationTracker();
+
+        background(0);
+
+        push();
+
+        if (mode == "2D") translate(width / 2, height / 2);
+
+        if (mode == "2D") rotate(frameCount);
+        else rotateY(frameCount);
+
+        // doesn't work yet:
+        shearX(sin(frameCount) * 25);
+        shearY(cos(frameCount*0.73) * 25);
+
+        scale(1+sin(frameCount)*0.5, 1.5, 0.8);
+
+        line(-100, -100, 100, 100);
+
+        var p1 = screenPosition(-100, -100, 0);
+        var p2 = screenPosition(100, 100, 0);
+
+        if (mode != "2D") rotateY(90);
+
+        fill(128);
+        rect(0, 0, 100, 100);
+
+        pop();
+
+        fill(255, 0, 0);
+        circle(p1.x, p1.y, 10);
+        circle(p2.x, p2.y, 10);
+      }
+
+      function mousePressed() {
+        noLoop();
+      }
+
+    </script>
+  </body>
+</html>
