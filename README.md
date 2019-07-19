@@ -10,16 +10,19 @@ As far as I could find out there should be anything implemented to make it work 
 
 For a quick look on what it's doing see https://editor.p5js.org/bohnacker/sketches/nUk3bVW7b. 
 
-1. Download the latest release of `addScreenPositionFunction.js`.
+### 1. Download
+Download the latest release of `addScreenPositionFunction.js`.
 
-2. Link to it in your HTML file. It's only working in combination with p5.js.
+### 2. Use it in your project
+Link to it in your HTML file. It's only working in combination with p5.js.
 
 ``` html
 <script src="p5.js"></script>
 <script src="addScreenPositionFunction.js"></script>
 ```
 
-3. Call the function `addScreenPositionFunction()` after creating the canvas.
+### 3. Initializing
+Call the function `addScreenPositionFunction()` after creating the canvas.
 
 ``` javascript
 function setup() {
@@ -37,7 +40,8 @@ p.setup = function() {
 };
 ```
 
-4. Now you can use `screenPosition(x, y, [z])` to get the position of a coordinate on screen. 
+### 4. Getting the screen position
+Now you can use `screenPosition(x, y, [z])` to get the position of a coordinate on screen. 
 ``` javascript
 var p1 = screenPosition(-100, 50, 0);
 ```
