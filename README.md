@@ -58,3 +58,5 @@ var v = [-100, 50, 0];
 var p = screenPosition( v );
 ```
 
+## Acknowledgements
+Thanks to Thibault Coppex (@tcoppex) for the 3d-modelview-projection-math he supplied in the issue discussion thread (https://github.com/processing/p5.js/issues/1553). I had to adjust it a bit maybe because p5js changed the way webgl is handled since 2016.
