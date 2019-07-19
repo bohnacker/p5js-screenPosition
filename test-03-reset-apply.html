@@ -24,7 +24,6 @@
 
         addScreenPositionFunction();
 
-        angleMode(DEGREES);
         rectMode(CENTER);
         stroke(255);
       }
@@ -36,15 +35,15 @@
 
         push();
 
+        // just for testing: this should be reset
+        scale(1.4);
+
+        resetMatrix();
+
         if (mode == "2D") translate(width / 2, height / 2);
 
-        if (mode == "2D") rotate(frameCount);
-        else rotateY(frameCount);
-
-        shearX(sin(frameCount) * 25);
-        shearY(cos(frameCount*0.73) * 25);
-
-        scale(1+sin(frameCount)*0.5, 1.5, 0.8);
+        let f = frameCount / 100;
+        applyMatrix(noise(f) * 2, noise(f+100)-0.5, noise(f+200)-0.5, noise(f+300) * 2, noise(f+400) * 200 - 100, noise(f+500) * 200 - 100);
 
         line(-100, -100, 100, 100);
 

@@ -4,4 +4,4 @@ This function provides a solution to the missing screenX and screenY functions i
 
 **This is work in progress.** 
 
-I'm aware of some missing stuff like tracking resetMatrix() and applyMatrix() in 2d-mode. 
+As far as I could find out there should be anything implemented to make it work perfectly in any mode (2D, WEBGL, angleMode DEGREES or RADIANS, normal or instance mode). If you'll find a case that isn't working correctly, please file an issue.

@@ -12,7 +12,7 @@ function addScreenPositionFunction(p5Instance) {
 	const R_WEBGL = 1;
 	let context = getObjectName(p._renderer.drawingContext).search("2D") >= 0 ? R_2D : R_WEBGL;
 
-	// this will be stack to push and pop matrices
+	// the stack to keep track of matrices when using push and pop
 	if (context == R_2D) {
 		p._renderer.matrixStack = [new p5.Matrix()];
 	}
@@ -27,6 +27,14 @@ function addScreenPositionFunction(p5Instance) {
 		};
 	}
 
+
+	if (p.resetMatrix instanceof Function) {
+		let resetMatrixNative = p.resetMatrix;
+		p.resetMatrix = function(...args) {
+			if (context == R_2D) p._renderer.matrixStack = [new p5.Matrix()];
+			resetMatrixNative.apply(p, args);
+		};
+	}
 
 	if (p.translate instanceof Function) {
 		let translateNative = p.translate;
@@ -92,7 +100,6 @@ function addScreenPositionFunction(p5Instance) {
 		};
 	}
 
-
 	// Help needed: don't know what transformation matrix to use 
 	// Solved: Matrix multiplication had to be in reversed order. 
 	// Still, this looks like it could be simplified.
@@ -130,6 +137,27 @@ function addScreenPositionFunction(p5Instance) {
 	}
 
 
+	if (p.applyMatrix instanceof Function) {
+		let applyMatrixNative = p.applyMatrix;
+		p.applyMatrix = function(...args) {
+			if (context == R_2D) {
+				let stack = p._renderer.matrixStack;
+				let m = last(stack);
+				let sm = new p5.Matrix();
+				sm.mat4[0] = args[0];
+				sm.mat4[1] = args[1];
+				sm.mat4[4] = args[2];
+				sm.mat4[5] = args[3];
+				sm.mat4[12] = args[4];
+				sm.mat4[13] = args[5];
+				sm.mult(m);
+				stack[stack.length - 1] = sm;
+			}
+			applyMatrixNative.apply(p, args);
+		};
+	}
+
+
 	if (p.push instanceof Function) {
 		let pushNative = p.push;
 		p.push = function(...args) {
@@ -147,6 +175,8 @@ function addScreenPositionFunction(p5Instance) {
 			popNative.apply(p, args);
 		};
 	}
+
+
 
 	p.screenPosition = function(x, y, z) {
 		if (x instanceof p5.Vector) {

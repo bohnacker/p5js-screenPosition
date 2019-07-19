@@ -36,6 +36,9 @@
           if (mode == "2D") p.rotate(p.radians(p.frameCount));
           else p.rotateY(p.radians(p.frameCount));
 
+          p.shearX(p.sin(p.frameCount / 100));
+          p.shearY(p.cos(p.frameCount / 73));
+
           p.scale(1.2, 1.5, 0.8);
 
           p.line(-100, -100, 100, 100);
