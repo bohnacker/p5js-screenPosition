@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>p5.js example</title>
+    <style> body {padding: 0; margin: 0;} </style>
+
+    <script src="addScreenPositionFunction.js"></script>
+    <script src="lib/p5.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+      // Example from @figraham at github. 
+      // https://github.com/bohnacker/p5js-screenPosition/issues/2
+      // Thanks for that!
+      
+      p5.disableFriendlyErrors = true;
+
+      // A graphics object for the 3D content.
+      let graphics;
+
+      function setup() {
+        createCanvas(400, 400);
+
+        // Creates an invisible WEBGL graphics object ...  
+        graphics = createGraphics(width, height, WEBGL);
+        // ... and applies the screenPosition function to it.
+        addScreenPositionFunction(graphics);
+        
+        fill(0, 0, 255);
+        rectMode(CENTER)
+        graphics.rectMode(CENTER);
+      }
+
+      function draw() {
+        background(220);
+
+        // Apply some transformations to the 3D world.        
+        graphics.clear();
+        graphics.rotateX(0.010);
+        graphics.rotateY(0.011);
+        graphics.rotateZ(0.012);
+        graphics.square(0, 0, 200);
+        
+        // Draw 3D graphics to the visible canvas.
+        image(graphics, 0, 0);
+        
+        push();
+        translate(width/2, height/2);
+        
+        // Use the screenPosition function on the 3D graphics ...
+        const gPoint = graphics.screenPosition(100, 0, 0);
+        // ... and draw a square at the resulting position on the 2D canvas.
+        square(gPoint.x, gPoint.y, 20);
+        pop();
+      }
+
+      function mousePressed() {
+        noLoop();
+      }
+
+    </script>
+  </body>
+</html>
