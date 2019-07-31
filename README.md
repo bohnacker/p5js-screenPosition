@@ -42,19 +42,27 @@ p.setup = function() {
 };
 ```
 
+Quite similar if you want to use the function with offscreen graphics:
+
+``` javascript
+graphics = createGraphics(400, 400);
+addScreenPositionFunction( graphics );
+```
+
+
 ### 4. Getting the screen position
 Now you can use `screenPosition(x, y, [z])` to get the position of a coordinate on screen. It returns a p5.Vector.
 ``` javascript
 var p = screenPosition(-100, 50, 0);
 ```
 
-Or:
+Or giving a p5.Vector:
 ``` javascript
 var v = createVector(-100, 50, 0)
 var p = screenPosition( v );
 ```
 
-Or:
+Or giving an array with x, y, z coordinates:
 ``` javascript
 var v = [-100, 50, 0];
 var p = screenPosition( v );
